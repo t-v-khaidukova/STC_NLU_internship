@@ -1,0 +1,11 @@
+req sent at 2025-04-25 16:55:12.864099 | answer arrived at 2025-04-25 16:55:14.026879 | model GigaChat-Max:1.0.26.20 | usage prompt_tokens=225 completion_tokens=16 total_tokens=241
+req sent at 2025-04-25 16:55:26.672931 | answer arrived at 2025-04-25 16:55:27.297010 | model GigaChat-Max:1.0.26.20 | usage prompt_tokens=225 completion_tokens=16 total_tokens=241
+req sent at 2025-04-25 16:58:05.573371 | answer arrived at 2025-04-25 16:58:06.426142 | model GigaChat-Max:1.0.26.20 | usage prompt_tokens=225 completion_tokens=16 total_tokens=241
+req sent at 2025-04-25 17:09:00.645738 | answer arrived at 2025-04-25 17:09:01.507652 | model GigaChat-Max:1.0.26.20 | usage prompt_tokens=225 completion_tokens=16 total_tokens=241
+req sent at 2025-04-25 17:09:01.516655 | answer arrived at 2025-04-25 17:09:01.861239 | model GigaChat-Max:1.0.26.20 | usage prompt_tokens=209 completion_tokens=11 total_tokens=220
+req sent at 2025-04-25 17:10:41.727440 | answer arrived at 2025-04-25 17:10:42.642044 | model GigaChat-Max:1.0.26.20 | usage prompt_tokens=10 completion_tokens=16 total_tokens=26
+req sent at 2025-04-25 17:10:42.644047 | answer arrived at 2025-04-25 17:10:42.987732 | model GigaChat-Max:1.0.26.20 | usage prompt_tokens=58 completion_tokens=11 total_tokens=69
+req sent at 2025-04-25 17:10:59.162875 | answer arrived at 2025-04-25 17:11:00.000279 | model GigaChat-Max:1.0.26.20 | usage prompt_tokens=225 completion_tokens=16 total_tokens=241
+req sent at 2025-04-25 17:11:00.003897 | answer arrived at 2025-04-25 17:11:00.367524 | model GigaChat-Max:1.0.26.20 | usage prompt_tokens=209 completion_tokens=11 total_tokens=220
+req sent at 2025-04-25 17:13:26.239326 | answer arrived at 2025-04-25 17:13:26.887699 | model GigaChat-Max:1.0.26.20 | usage prompt_tokens=225 completion_tokens=16 total_tokens=241
+req sent at 2025-04-25 17:13:26.891047 | answer arrived at 2025-04-25 17:13:27.204410 | model GigaChat-Max:1.0.26.20 | usage prompt_tokens=201 completion_tokens=11 total_tokens=212
