@@ -63,7 +63,7 @@ resp_arr = str(datetime.datetime.now())
 with open('usage_tom.txt', 'a') as f:
     f.write(f'req sent at {req_sent} | answer arrived at {resp_arr} | model {response.model} | usage {str(response.usage)}\n')
 answer = response.choices[0].message.content
-from grammar_graph_TIR.tools import Inf2Irregular
+from tools import Inf2Irregular
 i2ir = Inf2Irregular('C:\\Users\\tomilov\\LightRAG\\grammar_graph_TIR\\irregular-verbs-de.csv')
 
 
