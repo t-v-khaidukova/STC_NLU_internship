@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import Dict, List
 
 
 class Inf2Irregular:
@@ -26,8 +26,48 @@ class Inf2Irregular:
         assert form in [2, 3], f'Inappropriate form {form}'
         return self.mapping[form].get(infinitive, infinitive)
 
+class GrammarHelper:
+    singular_nouns_with_s = {
+        "measles", "mumps", "aerobics", "gymnastics", "darts",
+        "mathematics", "politics", "news", "thanks", "happiness"
+    }
+
+    plural_measurements = {"metres", "hours", "miles", "minutes", "seconds", "pounds"}
+
+    always_plural_nouns = {
+        "goods", "whereabouts", "remains", "stairs", "proceeds"
+    }
+
+    two_part_objects = {
+        "glasses", "jeans", "pyjamas", "scales",
+        "scissors", "spectacles", "trousers"
+    }
+
+    def get_verb_number(self, noun: str) -> str:
+        noun = noun.lower()
+        if noun in self.singular_nouns_with_s:
+            return "singular"
+        elif noun in self.always_plural_nouns or noun in self.two_part_objects:
+            return "plural"
+        elif any(noun.endswith(m) for m in self.plural_measurements):
+            return "singular"
+        return "unknown"
+
+    def explain_noun(self, noun: str) -> str:
+        number = self.get_verb_number(noun)
+        if number == "singular":
+            return f"The noun '{noun}' ends in -s but takes a singular verb due to its category (illness, abstract, etc.)."
+        elif number == "plural":
+            return f"The noun '{noun}' is treated as plural and takes a plural verb."
+        else:
+            return f"No special grammar rule found for '{noun}'. Context is needed."
+
 
 if __name__ == '__main__':
     i2i = Inf2Irregular('C:\\Users\\tomilov\\LightRAG\\grammar_graph_TIR\\irregular-verbs-de.csv')
     print(i2i.do_map('arise', 2))
     g =1
+
+    gn = GrammarHelper()
+    print(gn.get_verb_number("scissors"))  # plural
+    print(gn.explain_noun("politics"))     # explanation
