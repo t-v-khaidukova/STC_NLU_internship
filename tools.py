@@ -8,6 +8,7 @@ class Inf2Irregular:
         self.mapping = {2: {}, 3: {}}
         self.create_map(path_to_data)
 
+
     def create_map(self, path_to_data: str) -> None:
         with open(path_to_data, 'r') as f:
             file = f.readlines()
