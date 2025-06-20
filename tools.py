@@ -1,13 +1,40 @@
 from typing import Dict, List
 
+all_actual_tools = [
+    'Inf2Irregular',
+    'GrammarHelper'
+]
+
 
 class Inf2Irregular:
     # mapping: Dict[int, Dict[str, str]]
 
-    def __init__(self, path_to_data):
+    def __init__(self, path_to_data='irregular-verbs-de.csv'):
         self.mapping = {2: {}, 3: {}}
         self.create_map(path_to_data)
 
+    def description(self):
+        description = {
+            "name": "check_regularity",
+            "description": "Проверка правильности глагола",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "verb": {
+                        "type": "string",
+                        "description": "Инфинитив глагола для проверки"
+                    },
+                    "format": {
+                        "type": "bool",
+                        "description": "Регулярный глагол или нет"
+                    },
+                },
+                "required": [
+                    "verb",
+                ]
+            }
+        }
+        return description
 
     def create_map(self, path_to_data: str) -> None:
         with open(path_to_data, 'r') as f:
@@ -43,6 +70,38 @@ class GrammarHelper:
         "glasses", "jeans", "pyjamas", "scales",
         "scissors", "spectacles", "trousers"
     }
+
+    def description(self):
+        description = {
+        "name": "weather_forecast",
+        "description": "Возвращает температуру на заданный период",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "location": {
+                    "type": "string",
+                    "description": "Местоположение, например, название города"
+                },
+                "format": {
+                    "type": "string",
+                    "enum": [
+                        "celsius",
+                        "fahrenheit"
+                    ],
+                    "description": "Единицы измерения температуры"
+                },
+                "num_days": {
+                    "type": "integer",
+                    "description": "Период, для которого нужно вернуть"
+                }
+            },
+            "required": [
+                "location",
+  				"format"
+            ]
+        }
+    }
+        return description
 
     def get_verb_number(self, noun: str) -> str:
         noun = noun.lower()
