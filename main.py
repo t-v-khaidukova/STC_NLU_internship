@@ -50,9 +50,37 @@ class LLM_FC:
         its_args = message[-1]["choices"][-1]['message']['function_call']['arguments']
         return func_to_be_called, its_args
 
-    def fc(self, msg):
-        name = msg[-1]["choices"][-1]['message']['function_call']['name']
+    def fc(self, message):
+        # name = message[-1]["choices"][-1]['message']['function_call']['name']
         # TODO continue
+        # 1. Получить имя и аргументы функции
+        func_name, func_args = self.fc_prerun_desc(message)
+        # 2. Найти соответствующий callable в all_actual_tools
+        tools_map = all_actual_tools()
+        if func_name not in tools_map:
+            # Если функция неизвестна — кидаем ошибку или возвращаем сообщение
+            message.append({
+                'role': 'system',
+                'content': f"Ошибка: неизвестная функция '{func_name}'"
+            })
+            return message
+        # 3. Вызываем функцию
+        try:
+            result = tools_map[func_name](**func_args)
+        except Exception as e:
+            # Обработка ошибок в вызове функции
+            message.append({
+                'role': 'system',
+                'content': f"Ошибка при выполнении функции '{func_name}': {str(e)}"
+            })
+            return message
+        # 4. Добавляем сообщение от роли 'function' с результатом
+        message.append({
+            'role': 'function',
+            'name': func_name,
+            'content': str(result)
+        })
+        return message
 
     def run(self, request: str):
         response = self.model.chat({
