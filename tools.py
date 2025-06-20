@@ -82,7 +82,8 @@ class GrammarHelper:
                     "type": "string",
                     "description": "Существительное для анализа"
                 },
-            "required": ["noun"]
+            "required": ["noun"
+            ]
         }
     }
         return description
