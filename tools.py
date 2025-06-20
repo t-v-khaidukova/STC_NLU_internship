@@ -73,32 +73,16 @@ class GrammarHelper:
 
     def description(self):
         description = {
-        "name": "weather_forecast",
-        "description": "Возвращает температуру на заданный период",
+        "name": "explain_noun",
+        "description": "Объясняет правила согласования глагольной формы для данного существительного",
         "parameters": {
             "type": "object",
             "properties": {
-                "location": {
+                "noun": {
                     "type": "string",
-                    "description": "Местоположение, например, название города"
+                    "description": "Существительное для анализа"
                 },
-                "format": {
-                    "type": "string",
-                    "enum": [
-                        "celsius",
-                        "fahrenheit"
-                    ],
-                    "description": "Единицы измерения температуры"
-                },
-                "num_days": {
-                    "type": "integer",
-                    "description": "Период, для которого нужно вернуть"
-                }
-            },
-            "required": [
-                "location",
-  				"format"
-            ]
+            "required": ["noun"]
         }
     }
         return description
