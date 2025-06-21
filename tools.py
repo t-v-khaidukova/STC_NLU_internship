@@ -1,4 +1,6 @@
 from typing import Dict, List
+from gigachat.models import Chat, Messages, MessagesRole, Function, FunctionParameters
+from gigachat.models.function_parameters_property import FunctionParametersProperty
 
 all_actual_tools = [
     'Inf2Irregular',
@@ -14,26 +16,31 @@ class Inf2Irregular:
         self.create_map(path_to_data)
 
     def description(self):
-        description = {
-            "name": "check_regularity",
-            "description": "Проверка правильности глагола",
-            "parameters": {
-                "type": "object",
-                "properties": {
-                    "verb": {
-                        "type": "string",
-                        "description": "Инфинитив глагола для проверки"
-                    },
-                    "format": {
-                        "type": "bool",
-                        "description": "Регулярный глагол или нет"
-                    },
-                },
-                "required": [
-                    "verb",
-                ]
-            }
-        }
+        # description =Function(
+        #     name="duckduckgo_search",
+        #     description="""Поиск в DuckDuckGo.
+        #        Полезен, когда нужно ответить на вопросы о текущих событиях.
+        #        Входными данными должен быть поисковый запрос.""",
+        #     parameters=FunctionParameters(
+        #         type="object",
+        #         properties={"query": {"type": "string", "description": "Поисковый запрос"}},
+        #         required=["query"],
+        #     ),
+        # )
+        description = Function(name ="check_regularity",
+                               description="Проверка правильности глагола. Полезна, когда нужно поискать "
+                                           "в таблице неправльных глаголов.",
+                               parameters=FunctionParameters(type="object",
+                                                             properties={'verb':{"type": "string",
+                                                                                 "description":
+                                                                                     "Инфинитив глагола для проверки"},
+                                                             #  "format": FunctionParametersProperty(
+                                                             #      # type = bool,
+                                                             #      description="Регулярный глагол или нет"
+                                                             # )
+                                                              },
+                                                             required=["verb"]))
+
         return description
 
     def create_map(self, path_to_data: str) -> None:
@@ -54,6 +61,7 @@ class Inf2Irregular:
         assert form in [2, 3], f'Inappropriate form {form}'
         return self.mapping[form].get(infinitive, infinitive)
 
+
 class GrammarHelper:
     singular_nouns_with_s = {
         "measles", "mumps", "aerobics", "gymnastics", "darts",
@@ -72,20 +80,23 @@ class GrammarHelper:
     }
 
     def description(self):
-        description = {
-        "name": "explain_noun",
-        "description": "Объясняет правила согласования глагольной формы для данного существительного",
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "noun": {
-                    "type": "string",
-                    "description": "Существительное для анализа"
-                },
-            "required": ["noun"
-            ]
-        }
-    }
+
+        description = Function(name ="explain_noun",
+                               description="Объясняет правила согласования глагольной формы для данного существительного",
+                               parameters=FunctionParameters(type="object",
+                                                             properties= {'noun':{"type":"string",
+                                                                                  "description":
+                                                                                      "Существительное для анализа"},
+                                                             #  "format": FunctionParametersProperty(
+                                                             #      #type = bool,
+                                                             #      description="Объяснение"
+                                                             # )
+                                                              },
+                                                             required=["noun"]),)
+
+
+
+
         return description
 
     def get_verb_number(self, noun: str) -> str:
@@ -111,8 +122,8 @@ class GrammarHelper:
 if __name__ == '__main__':
     i2i = Inf2Irregular('C:\\Users\\tomilov\\LightRAG\\grammar_graph_TIR\\irregular-verbs-de.csv')
     print(i2i.do_map('arise', 2))
-    g =1
+    g = 1
 
     gn = GrammarHelper()
     print(gn.get_verb_number("scissors"))  # plural
-    print(gn.explain_noun("politics"))     # explanation
+    print(gn.explain_noun("politics"))  # explanation

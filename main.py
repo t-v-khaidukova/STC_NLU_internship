@@ -1,4 +1,6 @@
 from gigachat import GigaChat
+from gigachat.models import Chat, Messages, MessagesRole, Function
+import json
 from tools import Inf2Irregular, GrammarHelper, all_actual_tools
 """
 Перечень функций:
@@ -39,6 +41,7 @@ class LLM_FC:
         self.get_all_functions()
 
     def get_all_functions(self):
+        print('Creating tools')
         self.functions.append(Inf2Irregular().description())
         self.functions.append(GrammarHelper().description())
 
@@ -83,13 +86,24 @@ class LLM_FC:
         return message
 
     def run(self, request: str):
-        response = self.model.chat({
-            "messages": [
-                {
-                    "role": "user",
-                    "content": request  }
-    ],
-  "functions": self.functions})
+        from gigachat.models import Chat, Messages, MessagesRole, Function, FunctionParameters
+        search = Function(
+            name="duckduckgo_search",
+            description="""Поиск в DuckDuckGo.
+        Полезен, когда нужно ответить на вопросы о текущих событиях.
+        Входными данными должен быть поисковый запрос.""",
+            parameters=FunctionParameters(
+                type="object",
+                properties={"query": {"type": "string", "description": "Поисковый запрос"}},
+                required=["query"],
+            ),
+        )
+        payload = Chat(
+            messages=[Messages(role=MessagesRole.USER, content=request)],
+            functions=self.functions,
+            function_call='auto',
+        )
+        response = self.model.chat(payload)
 
 if __name__ == '__main__':
     print('Hello!')
